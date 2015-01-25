@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+      <title></title>
+      <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+      <link href="css/style.css" rel="stylesheet">
+       <!--<script src="https://cdn.firebase.com/js/client/2.1.1/firebase.js"></script>-->
+
+       <script type="text/javascript">
+           !function (a, b) { a("Keen", "https://d26b395fwzu5fz.cloudfront.net/3.2.1/keen.min.js", b) }(function (a, b, c) { var d, e, f; c["_" + a] = {}, c[a] = function (b) { c["_" + a].clients = c["_" + a].clients || {}, c["_" + a].clients[b.projectId] = this, this._config = b }, c[a].ready = function (b) { c["_" + a].ready = c["_" + a].ready || [], c["_" + a].ready.push(b) }, d = ["addEvent", "setGlobalProperties", "trackExternalLink", "on"]; for (var g = 0; g < d.length; g++) { var h = d[g], i = function (a) { return function () { return this["_" + a] = this["_" + a] || [], this["_" + a].push(arguments), this } }; c[a].prototype[h] = i(h) } e = document.createElement("script"), e.async = !0, e.src = b, f = document.getElementsByTagName("script")[0], f.parentNode.insertBefore(e, f) }, this);
+       </script>
+
+      <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+         <link href="css/ionic.app.css" rel="stylesheet">
+         -->
+      <!-- ionic/angularjs js -->
+      <script src="lib/ionic/js/ionic.bundle.js"></script>
+      <!-- cordova script (this will be a 404 during development) -->
+      <script src="cordova.js"></script>
+      <!-- your app's js -->
+      
+       <script src="js/data.js"></script>
+      <script src="js/services.js"></script>
+      <script src="js/utils.js"></script>
+      <script src="js/controllers.js"></script>
+      <script src="js/app.js"></script>
+
+      <style>
+         label {
+         white-space: nowrap;
+         font-weight: bold;
+         }
+         .item-radio {
+         font-weight: normal;
+         }
+         .input-label {
+         width: 50%;
+         }
+      </style>
+   </head>
+   <body ng-app="starter" ng-controller="FormController">
+      <form name="dataform">
+         <ion-pane>
+            <ion-header-bar align-title="left" class="bar-positive">
+               <button class="button button-icon icon ion-home" ng-click="activeForm=-1"></button>
+               <h1 class="title">Capturing for GMC no {{gmcData.gmcno}}</h1>
+                <a class="button button-icon icon ion-gear-a" ng-controller="GMCController" ng-click="askForGMCNo()"></a>
+            </ion-header-bar>
+            <ion-content>
+               <div class="card" id="intro" ng-show="activeForm==-1">
+                  <div class="item item-divider">
+                     Trauma Call
+                  </div>
+                  <div class="item item-text-wrap">
+                     <p>Record a trauma call.</p>
+                     <p>&nbsp;</p>
+                     <button class="button button-full button-dark" ng-click="startForm()">
+                     Start Trauma Call Entry &gt;
+                     </button>
+                  </div>
+               </div>
+               <div class="card" id="mainform" ng-show="activeForm>=0">
+                  <div class="item item-divider">
+                     {{formData[activeForm].formtitle}}
+                  </div>
+                  <div class="item item-text-wrap">
+                     <p ng-if="formData[activeForm].introtext">{{formData[activeForm].introtext}}</p>
+                     <div ng-repeat="formControl in formData[activeForm].controls">
+                        <div ng-if="formControl.type == 'text' ">
+                           <ng-form name="innerForm">
+                              <label class="item item-input  item-stacked-label">
+                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</div>
+                                 <div ng-show="innerForm[formControl.inputid].$error.required">(required)</div>
+                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)"  ng-required="formControl.required" maxlength="{{formControl.maxlength}}" type="{{formControl.type}}" id="{{formControl.inputid}}" name="{{formControl.inputid}}" placeholder="{{formControl.placeholder}}">
+                              </label>
+                           </ng-form>
+                        </div>
+                        <div ng-if="formControl.type == 'number'">
+                           <ng-form name="innerForm">
+                              <label class="item item-input  item-stacked-label">
+                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</div>
+                                 <div ng-show="innerForm[formControl.inputid].$error.required">(required)</div>
+                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.type}}1" placeholder="{{formControl.placeholder}}" min="{{formControl.min}}" max="{{formControl.max}}">
+                              </label>
+                           </ng-form>
+                        </div>
+                        <div ng-if="formControl.type == 'time'">
+                           <ng-form name="innerForm">
+                              <label class="item item-input  item-stacked-label">
+                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</div>
+                                 <div ng-show="innerForm[formControl.inputid].$error.required">(required)</div>
+                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.type}}2" placeholder="{{formControl.placeholder}}">
+                              </label>
+                           </ng-form>
+                        </div>
+                        <div ng-if="formControl.type == 'date' ">
+                           <label class="item item-input  item-stacked-label">
+                           <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
+                           <input  ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-model="formControl.value" type="{{formControl.type}}" id="{{formControl.type}}3" placeholder="{{formControl.placeholder}}">
+                           </label>
+                        </div>
+                        <div ng-if="formControl.type == 'multicheckbox' ">
+                           <label class="item item-input  item-stacked-label">
+                           <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
+                           </label>
+                           <div ng-repeat="checkBox in formControl.checkBoxes">
+                              <ion-checkbox  ng-change="controlChange(checkBox.value,checkBox.route,formData[activeForm].toformid)" ng-model="checkBox.value" ng-value="checkBox.inputid" >{{checkBox.placeholder}}</ion-checkbox>
+                           </div>
+                        </div>
+                        <div ng-if="formControl.type == 'radio' ">
+                           <label class="item item-input  item-stacked-label">
+                           <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
+                           </label>
+                           <div ng-repeat="radio in formControl.radios">
+                              <ion-radio ng-change="controlChange(formControl.value,radio.route,formData[activeForm].toformid)" ng-model="formControl.value" ng-value="radio.inputid">{{radio.placeholder}}</ion-radio>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div id="pleasewait" style="display:none;text-align:center">
+                  <h2>Please wait - saving..</h2>
+               </div>
+               <div id="finished" style="display:none;text-align:center">
+                  <h2>All done</h2>
+                  <button>Return to menu</button>
+               </div>
+            </ion-content>
+
+            <ion-footer-bar ng-show="activeForm!=-1">
+               <div  class="bar bar-footer bar-stable">
+                  <button id="prev"  name="prev" class="button button-dark " ng-if="activeForm > 0" ng-click="previousForm()">
+                  &lt; Previous
+                  </button>
+                  <!-- don't show last screen!-->
+                  <button id="next" name="next" class="button button-dark pull-right" ng-if="activeForm < (formData.length-1)" ng-click="nextForm()" ng-disabled="!dataform.$valid">
+                  Next &gt; 
+                  </button>
+                  <button id="finish" name="finish" class="button button-dark pull-right" ng-if="activeForm == (formData.length-1)" ng-click="submitForm()" ng-disabled="!dataform.$valid">
+                  Finish
+                  </button>
+               </div>
+            </ion-footer-bar>
+         </ion-pane>
+      </form>
+   </body>
+</html>
