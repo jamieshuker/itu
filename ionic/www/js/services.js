@@ -13,5 +13,7 @@ angular.module('starter.services', [])
     //or even just load a html file
     var _data = _globalFormConfig;
 
+    //fetch data from js server?
+
     this.data = _data;
 });

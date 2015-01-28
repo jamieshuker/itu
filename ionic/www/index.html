@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html>
-   <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-      <title></title>
-      <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-      <link href="css/style.css" rel="stylesheet">
-       <!--<script src="https://cdn.firebase.com/js/client/2.1.1/firebase.js"></script>-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <!--<script src="https://cdn.firebase.com/js/client/2.1.1/firebase.js"></script>-->
 
-       <script type="text/javascript">
-           !function (a, b) { a("Keen", "https://d26b395fwzu5fz.cloudfront.net/3.2.1/keen.min.js", b) }(function (a, b, c) { var d, e, f; c["_" + a] = {}, c[a] = function (b) { c["_" + a].clients = c["_" + a].clients || {}, c["_" + a].clients[b.projectId] = this, this._config = b }, c[a].ready = function (b) { c["_" + a].ready = c["_" + a].ready || [], c["_" + a].ready.push(b) }, d = ["addEvent", "setGlobalProperties", "trackExternalLink", "on"]; for (var g = 0; g < d.length; g++) { var h = d[g], i = function (a) { return function () { return this["_" + a] = this["_" + a] || [], this["_" + a].push(arguments), this } }; c[a].prototype[h] = i(h) } e = document.createElement("script"), e.async = !0, e.src = b, f = document.getElementsByTagName("script")[0], f.parentNode.insertBefore(e, f) }, this);
-       </script>
+    <script type="text/javascript">
+        !function (a, b) { a("Keen", "https://d26b395fwzu5fz.cloudfront.net/3.2.1/keen.min.js", b) }(function (a, b, c) { var d, e, f; c["_" + a] = {}, c[a] = function (b) { c["_" + a].clients = c["_" + a].clients || {}, c["_" + a].clients[b.projectId] = this, this._config = b }, c[a].ready = function (b) { c["_" + a].ready = c["_" + a].ready || [], c["_" + a].ready.push(b) }, d = ["addEvent", "setGlobalProperties", "trackExternalLink", "on"]; for (var g = 0; g < d.length; g++) { var h = d[g], i = function (a) { return function () { return this["_" + a] = this["_" + a] || [], this["_" + a].push(arguments), this } }; c[a].prototype[h] = i(h) } e = document.createElement("script"), e.async = !0, e.src = b, f = document.getElementsByTagName("script")[0], f.parentNode.insertBefore(e, f) }, this);
+    </script>
 
-      <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
          <link href="css/ionic.app.css" rel="stylesheet">
          -->
-      <!-- ionic/angularjs js -->
-      <script src="lib/ionic/js/ionic.bundle.js"></script>
-      <!-- cordova script (this will be a 404 during development) -->
-      <script src="cordova.js"></script>
-      <!-- your app's js -->
-      
-       <script src="js/data.js"></script>
-      <script src="js/services.js"></script>
-      <script src="js/utils.js"></script>
-      <script src="js/controllers.js"></script>
-      <script src="js/app.js"></script>
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+    <!-- your app's js -->
 
-      <style>
-         label {
-         white-space: nowrap;
-         font-weight: bold;
-         }
-         .item-radio {
-         font-weight: normal;
-         }
-         .input-label {
-         width: 50%;
-         }
-      </style>
-   </head>
-   <body ng-app="starter" ng-controller="FormController">
-      <form name="dataform">
-         <ion-pane>
+    <script src="js/data.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
+
+    <style>
+        label {
+            white-space: nowrap;
+            font-weight: bold;
+        }
+
+        .item-radio {
+            font-weight: normal;
+        }
+
+        .input-label {
+            width: 50%;
+        }
+    </style>
+</head>
+<body ng-app="starter" ng-controller="FormController">
+    <form name="dataform">
+        <ion-pane>
             <ion-header-bar align-title="left" class="bar-positive">
                <button class="button button-icon icon ion-home" ng-click="activeForm=-1"></button>
                <h1 class="title">Capturing for GMC no {{gmcData.gmcno}}</h1>
@@ -112,9 +114,10 @@
                         <div ng-if="formControl.type == 'radio' ">
                            <label class="item item-input  item-stacked-label">
                            <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
+                               <!--<div ng-show="formControl.value.length==0">(required)</div>-->
                            </label>
                            <div ng-repeat="radio in formControl.radios">
-                              <ion-radio ng-change="controlChange(formControl.value,radio.route,formData[activeForm].toformid)" ng-model="formControl.value" ng-value="radio.inputid">{{radio.placeholder}}</ion-radio>
+                              <ion-radio ng-change="controlChange(formControl.value,radio.route,formData[activeForm].toformid)" ng-required="!formControl.value" ng-model="formControl.value" ng-value="radio.inputid">{{radio.placeholder}}</ion-radio>
                            </div>
                         </div>
                      </div>
@@ -144,6 +147,6 @@
                </div>
             </ion-footer-bar>
          </ion-pane>
-      </form>
-   </body>
+    </form>
+</body>
 </html>
