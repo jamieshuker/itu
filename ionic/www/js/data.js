@@ -35,7 +35,7 @@ var _globalFormConfig = [
      { inputid: 'patienthospitalno', type: 'text', placeholder: 'XX1234', maxlength: 6, label: 'Hopsital No', required: true },
       { inputid: 'patientsurname', type: 'text', label: 'Patient Surname', placeholder: 'Doe', required: false, maxlength: 100 },
       { inputid: 'patientforename', type: 'text', label: 'Patient Forename', placeholder: 'John', required: false, maxlength: 100 },
-      { inputid: 'patientage', type: 'number', placeholder: 'age', label: 'Age*', required: true, min: 0, max: 130 },
+      { inputid: 'patientage', type: 'number', placeholder: 'age', label: 'Age', required: true, min: 0, max: 130 },
       {
           inputid: 'patientgender', type: 'radio', label: 'Gender', initialvalue: '', radios: [{ inputid: 'patientmale', placeholder: 'Male', initialvalue: false },
                                                                                                         { inputid: 'patientfemale', placeholder: 'Female', initialvalue: false }]
