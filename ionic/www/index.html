@@ -30,7 +30,11 @@
     <style>
         label {
             white-space: nowrap;
-            font-weight: bold;
+            font-weight: normal;
+        }
+
+        .item {
+            font-size:14px;
         }
 
         .item-radio {
@@ -38,7 +42,10 @@
         }
 
         .input-label {
-            width: 50%;
+            width: 100%;
+            font-weight:normal;
+             /*color:#aaa;*/
+             margin-top:5px;
         }
     </style>
 </head>
@@ -47,7 +54,7 @@
         <ion-pane>
             <ion-header-bar align-title="left" class="bar-positive">
                <button class="button button-icon icon ion-home" ng-click="activeForm=-1"></button>
-               <h1 class="title">Capturing for GMC no {{gmcData.gmcno}}</h1>
+               <h1 class="title">GMC no {{gmcData.gmcno}}</h1>
                 <a class="button button-icon icon ion-gear-a" ng-controller="GMCController" ng-click="askForGMCNo()"></a>
             </ion-header-bar>
             <ion-content>
@@ -73,8 +80,7 @@
                         <div ng-if="formControl.type == 'text' ">
                            <ng-form name="innerForm">
                               <label class="item item-input  item-stacked-label">
-                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</div>
-                                 <div ng-show="innerForm[formControl.inputid].$error.required">(required)</div>
+                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
                                  <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)"  ng-required="formControl.required" maxlength="{{formControl.maxlength}}" type="{{formControl.type}}" id="{{formControl.inputid}}" name="{{formControl.inputid}}" placeholder="{{formControl.placeholder}}">
                               </label>
                            </ng-form>
@@ -82,7 +88,7 @@
                         <div ng-if="formControl.type == 'number'">
                            <ng-form name="innerForm">
                               <label class="item item-input  item-stacked-label">
-                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</div>
+                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
                                  <div ng-show="formControl.value.length==0">(required)</div>
                                  <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}" min="{{formControl.min}}" max="{{formControl.max}}">
                               </label>
@@ -91,7 +97,7 @@
                         <div ng-if="formControl.type == 'time'">
                            <ng-form name="innerForm">
                               <label class="item item-input  item-stacked-label">
-                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</div>
+                                 <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
                                  <div ng-show="innerForm[formControl.inputid].$error.required">(required)</div>
                                  <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}">
                               </label>
@@ -99,7 +105,7 @@
                         </div>
                         <div ng-if="formControl.type == 'date' ">
                            <label class="item item-input  item-stacked-label">
-                           <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
+                           <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
                            <input  ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-model="formControl.value" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}">
                            </label>
                         </div>
@@ -113,8 +119,9 @@
                         </div>
                         <div ng-if="formControl.type == 'radio' ">
                            <label class="item item-input  item-stacked-label">
-                           <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
-                               <div ng-show="formControl.value.length==0">(required)</div>
+                               <!-- radio always compulsory? -->
+                           <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}*</span>
+                               <!--<div ng-show="formControl.value.length==0">(required)</div>-->
                            </label>
                            <div ng-repeat="radio in formControl.radios">
                               <ion-radio ng-change="controlChange(formControl.value,radio.route,formData[activeForm].toformid)" ng-required="!formControl.value" ng-model="formControl.value" ng-value="radio.inputid">{{radio.placeholder}}</ion-radio>
