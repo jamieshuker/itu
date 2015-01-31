@@ -40,7 +40,7 @@ angular.module('starter.controllers', [])
 
     //index of visible form input fields
     $scope.activeForm = -1;
-
+    $scope.activeProcess = -1;
     $scope.formData = FormDataService.data;
     $scope.gmcData = GMCService.data;
 
@@ -102,23 +102,24 @@ angular.module('starter.controllers', [])
         //if no route property on any value we always jump to the next entry
 
         if ($scope.nextFormID != null)
-            $scope.activeForm = findArrayIndexByNameAndValue(FormDataService.data, "formid", $scope.nextFormID)
+            $scope.activeForm = findArrayIndexByNameAndValue(FormDataService.data[$scope.activeProcess].processforms, "formid", $scope.nextFormID)
         else
             $scope.activeForm++;
 
         //record previous formid so back button is easy to manage
-        FormDataService.data[$scope.activeForm].previousformindex = currentformid;
+        FormDataService.data[$scope.activeProcess].processforms[$scope.activeForm].previousformindex = currentformid;
     }
 
     //navigates to preivous form 
     //form history
     $scope.previousForm = function () {
-        $scope.activeForm = FormDataService.data[$scope.activeForm].previousformindex;
+        $scope.activeForm = FormDataService.data[$scope.activeProcess].processforms[$scope.activeForm].previousformindex;
     }
 
-    $scope.startForm = function () {
+    $scope.startForm = function (processIndex) {
         $scope.activeForm = 0;
-        $scope.resetValuesToInitialValues(FormDataService.data);
+        $scope.activeProcess = processIndex;
+        $scope.resetValuesToInitialValues(FormDataService.data[$scope.activeProcess].processforms);
     }
 
 
@@ -143,7 +144,7 @@ angular.module('starter.controllers', [])
         //$("#finished").css("display", "block");
 
         //need to just serialize data here into new json object of just inputid/value
-        $scope.writeToFirebase($scope.formToIDandValues(FormDataService.data));
+        $scope.writeToFirebase($scope.formToIDandValues(FormDataService.data[$scope.activeProcess].processforms));
 
         //$scope.activeForm = 0;
     }

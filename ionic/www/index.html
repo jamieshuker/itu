@@ -30,7 +30,7 @@
     <style>
         label {
             white-space: nowrap;
-            font-weight: normal;
+            font-weight: bold;
         }
 
         .item {
@@ -43,7 +43,7 @@
 
         .input-label {
             width: 100%;
-            font-weight:normal;
+            font-weight:bold;
              /*color:#aaa;*/
              margin-top:5px;
         }
@@ -58,30 +58,30 @@
                 <a class="button button-icon icon ion-gear-a" ng-controller="GMCController" ng-click="askForGMCNo()"></a>
             </ion-header-bar>
             <ion-content>
-               <div class="card" id="intro" ng-show="activeForm==-1">
+               <div class="card" id="intro" ng-show="activeForm==-1"  ng-repeat="process in formData">
                   <div class="item item-divider">
-                     Trauma Call
+                     {{process.processname}}
                   </div>
                   <div class="item item-text-wrap">
-                     <p>Record a trauma call.</p>
+                     <p>{{process.processdescription}}</p>
                      <p>&nbsp;</p>
-                     <button class="button button-full button-dark" ng-click="startForm()">
-                     Start Trauma Call Entry &gt;
+                     <button class="button button-full button-dark" ng-click="startForm($index)">
+                     Go! &gt;
                      </button>
                   </div>
                </div>
                <div class="card" id="mainform" ng-show="activeForm>=0">
                   <div class="item item-divider">
-                     {{formData[activeForm].formtitle}}
+                     {{formData[activeProcess].processforms[activeForm].formtitle}}
                   </div>
                   <div class="item item-text-wrap">
-                     <p ng-if="formData[activeForm].introtext">{{formData[activeForm].introtext}}</p>
-                     <div ng-repeat="formControl in formData[activeForm].controls">
+                     <p ng-if="formData[activeForm].introtext">{{formData[activeProcess].processforms[activeForm].introtext}}</p>
+                     <div ng-repeat="formControl in formData[activeProcess].processforms[activeForm].controls">
                         <div ng-if="formControl.type == 'text' ">
                            <ng-form name="innerForm">
                               <label class="item item-input  item-stacked-label">
                                  <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
-                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)"  ng-required="formControl.required" maxlength="{{formControl.maxlength}}" type="{{formControl.type}}" id="{{formControl.inputid}}" name="{{formControl.inputid}}" placeholder="{{formControl.placeholder}}">
+                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeProcess].processforms[activeForm].toformid)"  ng-required="formControl.required" maxlength="{{formControl.maxlength}}" type="{{formControl.type}}" id="{{formControl.inputid}}" name="{{formControl.inputid}}" placeholder="{{formControl.placeholder}}">
                               </label>
                            </ng-form>
                         </div>
@@ -90,7 +90,7 @@
                               <label class="item item-input  item-stacked-label">
                                  <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
                                  <div ng-show="formControl.value.length==0">(required)</div>
-                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}" min="{{formControl.min}}" max="{{formControl.max}}">
+                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeProcess].processforms[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}" min="{{formControl.min}}" max="{{formControl.max}}">
                               </label>
                            </ng-form>
                         </div>
@@ -99,14 +99,14 @@
                               <label class="item item-input  item-stacked-label">
                                  <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
                                  <div ng-show="innerForm[formControl.inputid].$error.required">(required)</div>
-                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}">
+                                 <input ng-model="formControl.value" ng-change="controlChange(formControl.value,formControl.route,formData[activeProcess].processforms[activeForm].toformid)" ng-required="formControl.required" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}">
                               </label>
                            </ng-form>
                         </div>
                         <div ng-if="formControl.type == 'date' ">
                            <label class="item item-input  item-stacked-label">
                            <div class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}<span ng-show="formControl.required==true">*</span></div>
-                           <input  ng-change="controlChange(formControl.value,formControl.route,formData[activeForm].toformid)" ng-model="formControl.value" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}">
+                           <input  ng-change="controlChange(formControl.value,formControl.route,formData[activeProcess].processforms[activeForm].toformid)" ng-model="formControl.value" type="{{formControl.type}}" id="{{formControl.id}}" placeholder="{{formControl.placeholder}}">
                            </label>
                         </div>
                         <div ng-if="formControl.type == 'multicheckbox' ">
@@ -114,7 +114,7 @@
                            <span class="input-label" ng-if="formControl.label.length>0">{{formControl.label}}</span>
                            </label>
                            <div ng-repeat="checkBox in formControl.checkBoxes">
-                              <ion-checkbox  ng-change="controlChange(checkBox.value,checkBox.route,formData[activeForm].toformid)" ng-model="checkBox.value" ng-value="checkBox.inputid" >{{checkBox.placeholder}}</ion-checkbox>
+                              <ion-checkbox  ng-change="controlChange(checkBox.value,checkBox.route,formData[activeProcess].processforms[activeForm].toformid)" ng-model="checkBox.value" ng-value="checkBox.inputid" >{{checkBox.placeholder}}</ion-checkbox>
                            </div>
                         </div>
                         <div ng-if="formControl.type == 'radio' ">
@@ -124,7 +124,7 @@
                                <!--<div ng-show="formControl.value.length==0">(required)</div>-->
                            </label>
                            <div ng-repeat="radio in formControl.radios">
-                              <ion-radio ng-change="controlChange(formControl.value,radio.route,formData[activeForm].toformid)" ng-required="!formControl.value" ng-model="formControl.value" ng-value="radio.inputid">{{radio.placeholder}}</ion-radio>
+                              <ion-radio ng-change="controlChange(formControl.value,radio.route,formData[activeProcess].processforms[activeForm].toformid)" ng-required="!formControl.value" ng-model="formControl.value" ng-value="radio.inputid">{{radio.placeholder}}</ion-radio>
                            </div>
                         </div>
                      </div>
@@ -145,10 +145,10 @@
                   &lt; Previous
                   </button>
                   <!-- don't show last screen!-->
-                  <button id="next" name="next" class="button button-dark pull-right" ng-if="activeForm < (formData.length-1)" ng-click="nextForm()" ng-disabled="!dataform.$valid">
+                  <button id="next" name="next" class="button button-dark pull-right" ng-if="activeForm < (formData[activeProcess].processforms.length-1)" ng-click="nextForm()" ng-disabled="!dataform.$valid">
                   Next &gt; 
                   </button>
-                  <button id="finish" name="finish" class="button button-dark pull-right" ng-if="activeForm == (formData.length-1)" ng-click="submitForm()" ng-disabled="!dataform.$valid">
+                  <button id="finish" name="finish" class="button button-dark pull-right" ng-if="activeForm == (formData[activeProcess].processforms.length-1)" ng-click="submitForm()" ng-disabled="!dataform.$valid">
                   Finish
                   </button>
                </div>
