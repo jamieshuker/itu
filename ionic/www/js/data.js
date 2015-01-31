@@ -3,15 +3,7 @@
 //most of the params are self explanatory
 //keep your eye out for routes
 var _globalFormConfig = [
-    {
-        processname: 'Ward referral example form',
-        processdescription: 'This is a test form to test multiple forms.  It doesn\'t do anything.',
-        processforms:
-        [
-        {
-        }
-        ]
-    },
+   
     {
         processname: 'ITU Trauma Call',
         processdescription: 'Record an ITU trauma call.  ',
@@ -200,5 +192,14 @@ var _globalFormConfig = [
             ]
         }
         ]
-    }
+    },
+ {
+     processname: 'Ward referral example form',
+     processdescription: 'This is a test form to test multiple forms.  It doesn\'t do anything.',
+     processforms:
+     [
+     {
+     }
+     ]
+ }
 ];
