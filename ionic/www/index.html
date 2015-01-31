@@ -54,8 +54,11 @@
         <ion-pane>
             <ion-header-bar align-title="left" class="bar-positive">
                <button class="button button-icon icon ion-home" ng-click="activeForm=-1"></button>
-               <h1 class="title">GMC no {{gmcData.gmcno}}</h1>
-                <a class="button button-icon icon ion-gear-a" ng-controller="GMCController" ng-click="askForGMCNo()"></a>
+               <h1 class="title">
+                   <span ng-show="activeForm==-1" class="title">Submitting for GMC no {{gmcData.gmcno}}</span>
+                   <span ng-show="activeForm>=0" class="title">{{formData[activeProcess].processname}}</span>
+               </h1>
+               <a class="button button-icon icon ion-gear-a" ng-controller="GMCController" ng-click="askForGMCNo()"></a>
             </ion-header-bar>
             <ion-content>
 <!--               <div class="card" id="intro" ng-show="activeForm==-1"  ng-repeat="process in formData">
