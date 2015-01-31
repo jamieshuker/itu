@@ -16,7 +16,8 @@ angular.module('starter.controllers', [])
                   text: '<b>Ok</b>',
                   type: 'button-positive',
                   onTap: function (e) {
-                      return $scope.data.gmcno;
+                      if ($scope.data.gmcno.length==7)
+                        return $scope.data.gmcno;
                   }
               }
             ]
