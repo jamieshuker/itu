@@ -7,8 +7,17 @@ var time = new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.get
 //array of screens
 var _globalFormConfig = [
     {
+        processname: 'Ward referral example form',
+        processdescription: 'This is a test form to test multiple forms.  It doesn\'t do anything.',
+        processforms:
+        [
+        {
+        }
+        ]
+    },
+    {
         processname: 'ITU Trauma Call',
-        processdescription: 'Record a trauma call',
+        processdescription: 'Record an ITU trauma call.  ',
         processforms:
         [
         {
