@@ -1,7 +1,10 @@
 
 //array of screens
 //most of the params are self explanatory
+//
 //keep your eye out for routes
+//toformid is a global override that sets the id of the next form, otherwise flow is sequential
+//route changes the the next form based on a value of an input
 var _globalFormConfig = [
 
     {
