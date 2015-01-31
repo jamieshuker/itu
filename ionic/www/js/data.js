@@ -1,9 +1,5 @@
 /* static config of form data */
 
-var date = new Date();
-//knock seconds off so time input field doesn't look a mess.
-var time = new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), 0);
-
 //array of screens
 var _globalFormConfig = [
     {
@@ -21,13 +17,12 @@ var _globalFormConfig = [
         processforms:
         [
         {
-            formid: 'logon',
+            formid: 'datetime',
             formtitle: 'Date and Time',
             previousformindex: null,
             controls: [
-           //{ inputid: 'gmcno', type: 'number', placeholder: '1234567', label: 'GMC Number (7 digits)', required: true, min: 100000, max: 9999999 },
-           { inputid: 'reviewdate', type: 'date', initialvalue: date, label: 'Date of patient review', required: true },
-           { inputid: 'reviewtime', type: 'time', initialvalue: time, label: 'Time of patient review', required: true }]
+           { inputid: 'reviewdate', type: 'date', initialvalue: new Date(), label: 'Date of patient review', required: true },
+           { inputid: 'reviewtime', type: 'time', initialvalue: new Date(), label: 'Time of patient review', required: true }]
         },
        {
            formid: 'activity',
@@ -157,7 +152,6 @@ var _globalFormConfig = [
                    checkBoxes: [{ inputid: 'aeward', placeholder: 'A+E/Ward', initialvalue: false },
                                 { inputid: 'cametocritcalcare', placeholder: 'Came to critical care', initialvalue: false },
                                 { inputid: 'palliation', placeholder: 'Palliation', initialvalue: false },
-    /*                                { inputid: 'transfertoothercentre', placeholder: 'Transfer to other centre', initialvalue: false, route: { condition: true, toformid: 'transferinfo' } },*/
                                 { inputid: 'theatre', placeholder: 'Theatre', initialvalue: false },
                                 { inputid: 'angiosuite', placeholder: 'Angiosuite', initialvalue: false },
                                 { inputid: 'died', placeholder: 'Died', initialvalue: false }

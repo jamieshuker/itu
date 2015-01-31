@@ -77,18 +77,29 @@ angular.module('starter.controllers', [])
 
 
     $scope.resetValuesToInitialValues = function (form) {
+
+        // update date and time
+        var date = new Date();
+        var time = new Date(date.getFullYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), 0);
+
+
         var result = [];
         for (var f = 0; f < form.length; f++) {
             for (c = 0; c < form[f].controls.length; c++) {
                 if (form[f].controls[c].type == 'multicheckbox') {
                     for (m = 0; m < form[f].controls[c].checkBoxes.length; m++) {
                         form[f].controls[c].checkBoxes[m].value = form[f].controls[c].checkBoxes[m].initialvalue;
-                        
                     }
                 }
+                else if ((form[f].controls[c].type == 'date') && (form[f].controls[c].initialvalue != null))
+                    form[f].controls[c].value = date;
+                else if ((form[f].controls[c].type == 'time') && (form[f].controls[c].initialvalue != null))
+                    form[f].controls[c].value = time;
                 else {
                     form[f].controls[c].value = form[f].controls[c].initialvalue;
                 }
+
+
             }
         }
         return result;
