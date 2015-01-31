@@ -1,6 +1,7 @@
-/* static config of form data */
 
 //array of screens
+//most of the params are self explanatory
+//keep your eye out for routes
 var _globalFormConfig = [
     {
         processname: 'Ward referral example form',

@@ -52,6 +52,8 @@ angular.module('starter.controllers', [])
     }
 
     //serialize data here into new json object of just inputid/value
+    //definitely needs work here, may not even be necessary
+    //and here's a better structure for the form if we save it as a document
     $scope.formToIDandValues = function (form) {
         var result = [];
         for (var f = 0; f < form.length; f++) {
@@ -60,6 +62,7 @@ angular.module('starter.controllers', [])
                     for (m = 0; m < form[f].controls[c].checkBoxes.length; m++) {
                         var mobj = {};
                         mobj['id'] = form[f].controls[c].checkBoxes[m].inputid;
+                        mobj['formid'] = form[f].formid;
                         mobj['value'] = form[f].controls[c].checkBoxes[m].value;
                         result.push(mobj);
                     }
@@ -67,6 +70,7 @@ angular.module('starter.controllers', [])
                 else {
                     var obj = {};
                     obj['id'] = form[f].controls[c].inputid;
+                    obj['formid'] = form[f].formid;
                     obj['value'] = form[f].controls[c].value;
                     result.push(obj);
                 }
@@ -156,9 +160,10 @@ angular.module('starter.controllers', [])
         //$("#finished").css("display", "block");
 
         //need to just serialize data here into new json object of just inputid/value
-        $scope.writeToFirebase($scope.formToIDandValues(FormDataService.data[$scope.activeProcess].processforms));
+        //$scope.writeToFirebase($scope.formToIDandValues(FormDataService.data[$scope.activeProcess].processforms));
 
-        //$scope.activeForm = 0;
+        $scope.activeForm = -1;
+        $scope.activeProcess = -1;
     }
 
     //can do stuff here when form changes
